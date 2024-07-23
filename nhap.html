@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Quản lý CSDL</title>
+<script>
+// Giả sử chúng ta có một API để giao tiếp với CSDL
+const apiUrl = 'đường_dẫn_api_của_bạn';
+
+// Hàm thêm mới bản ghi
+function themMoi() {
+    const id = document.getElementById('id').value;
+    const ten = document.getElementById('ten').value;
+    const email = document.getElementById('email').value;
+
+    // Gửi yêu cầu thêm mới đến API
+    fetch(apiUrl + '/them-moi', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id, ten, email }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert('Thêm mới thành công!');
+        console.log(data);
+    })
+    .catch((error) => {
+        console.error('Lỗi:', error);
+    });
+}
+
+// Hàm cập nhật bản ghi
+function capNhat() {
+    const id = document.getElementById('id').value;
+    const ten = document.getElementById('ten').value;
+    const email = document.getElementById('email').value;
+
+    // Gửi yêu cầu cập nhật đến API
+    fetch(apiUrl + '/cap-nhat/' + id, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ ten, email }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert('Cập nhật thành công!');
+        console.log(data);
+    })
+    .catch((error) => {
+        console.error('Lỗi:', error);
+    });
+}
+
+// Hàm xóa bản ghi
+function xoaBanGhi() {
+    const id = document.getElementById('id').value;
+
+    // Gửi yêu cầu xóa đến API
+    fetch(apiUrl + '/xoa/' + id, {
+        method: 'DELETE'
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert('Xóa thành công!');
+        console.log(data);
+    })
+    .catch((error) => {
+        console.error('Lỗi:', error);
+    });
+}
+</script>
+</head>
+<body>
+<h1>Quản lý CSDL</h1>
+<label for="id">ID:</label>
+<input type="text" id="id" name="id"><br><br>
+<label for="ten">Tên:</label>
+<input type="text" id="ten" name="ten"><br><br>
+<label for="email">Email:</label>
+<input type="text" id="email" name="email"><br><br>
+<button onclick="themMoi()">Thêm mới</button>
+<button onclick="capNhat()">Cập nhật</button>
+<button onclick="xoaBanGhi()">Xóa</button>
+</body>
+</html>
